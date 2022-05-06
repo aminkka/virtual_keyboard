@@ -429,8 +429,11 @@ function generateKey(data) {
     if (element.eventCode === 'ControlLeft') {
       key.classList.add('key_ctrl');
     }
-
-    key.innerText = element.en;
+    key.eventCode = element.eventCode;
+    key.type = element.type;
+    key.en = element.en;
+    key.ru = element.ru;
+    key.innerText = key.en;
     keyboard.append(key);
   });
 }
@@ -438,3 +441,31 @@ function generateKey(data) {
 generateKey(keyData);
 
 const keys = document.querySelectorAll('.key');
+
+function addHighlightPressedKey(event) {
+  keys.forEach((elem) => {
+    if (event.code === elem.eventCode) {
+      elem.classList.add('key_active');
+    } else if (event.target.classList.contains('key')) {
+      event.target.classList.add('key_active');
+    }
+  });
+}
+
+function removeHighlightPressedKey(event) {
+  keys.forEach((elem) => {
+    if (event.code === elem.eventCode) {
+      elem.classList.remove('key_active');
+    } else if (event.target.classList.contains('key')) {
+      event.target.classList.remove('key_active');
+    }
+  });
+}
+document.addEventListener('keydown', addHighlightPressedKey);
+document.addEventListener('keyup', removeHighlightPressedKey);
+document.addEventListener('mousedown', addHighlightPressedKey);
+document.addEventListener('mouseup', removeHighlightPressedKey);
+
+function changeLanguage() {
+
+}
