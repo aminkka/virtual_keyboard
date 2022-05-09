@@ -5,24 +5,18 @@
   align-items: center;
   width: 60px;
   height: 60px;
-  // border: 2px solid #000000;
   border-radius: 9px;
-  background: #fdfdfd;
+  border: 3px solid rgb(204, 159, 174);
+  background: lavenderblush;
   color:#000000;
   cursor: pointer;
   &:hover {
     box-shadow: 0px 2px 10px 3px rgba(0 ,0, 0, 0.5);
   }
-  &_active {
-    top: 2px;
-    border-radius: 12px;
-    background: coral;
-    box-shadow: 0px 2px 10px 3px rgba(0 ,0, 0, 0.5);
-  }
 }
 
 .key_space {
-  width: 393px;
+  width: 348px;
 }
 
 .key_backspace {
@@ -54,5 +48,12 @@
 }
 
 .key_arrow {
-  height: 27px;
+  background:pink;
+  border: 3px solid rgb(204, 159, 174);
+}
+
+.key_active {
+  border-radius: 20px;
+  background:radial-gradient(pink, rgb(217, 110, 128));
+  box-shadow: 0px 2px 10px 3px rgba(0 ,0, 0, 0.5);
 }
