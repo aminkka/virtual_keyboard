@@ -530,3 +530,29 @@ function swichKeysForChangeLanguage(func, key1, key2) {
 }
 swichKeysForChangeLanguage(changeLanguage, 'ControlLeft', 'MetaLeft');
 
+function toggleUpperCase(event) {
+  if (event.target.classList.contains('key_capslock') || event.code === 'CapsLock') {
+    document.querySelector('.key_capslock').classList.toggle('key_active');
+    keys.forEach((elem) => {
+      const [enSmall, enBig] = elem.en;
+      const [ruSmall, ruBig] = elem.ru;
+      if (elem.classList.contains('key_alphabetic') && (elem.innerText === enSmall)) {
+        const langEnBig = elem;
+        langEnBig.innerText = enBig;
+      } else if (elem.classList.contains('key_alphabetic') && (elem.innerText === enBig)) {
+        const langEnSmall = elem;
+        langEnSmall.innerText = enSmall;
+      } else if (elem.classList.contains('key_alphabetic') && (elem.innerText === ruBig)) {
+        const langRuSmall = elem;
+        langRuSmall.innerText = ruSmall;
+      } else if (elem.classList.contains('key_alphabetic') && (elem.innerText === ruSmall)) {
+        const langRuBig = elem;
+        langRuBig.innerText = ruBig;
+      }
+    });
+  }
+}
+keyboard.addEventListener('click', toggleUpperCase);
+document.addEventListener('keydown', toggleUpperCase);
+
+
