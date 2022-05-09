@@ -555,4 +555,115 @@ function toggleUpperCase(event) {
 keyboard.addEventListener('click', toggleUpperCase);
 document.addEventListener('keydown', toggleUpperCase);
 
+function pressOnShift(event) {
+  if (event.target.classList.contains('key_shift') || event.code === 'ShiftLeft' || event.code === 'ShiftRight') {
+    keys.forEach((elem) => {
+      const [enSmall, enBig] = elem.en;
+      const [ruSmall, ruBig] = elem.ru;
+      if (lang === 'en') {
+        if (elem.innerText === enSmall) {
+          const langEnBig = elem;
+          langEnBig.innerText = enBig;
+        } else if (elem.innerText === enBig) {
+          const langEnSmall = elem;
+          langEnSmall.innerText = enSmall;
+        }
+      }
+      if (lang === 'ru') {
+        if (elem.innerText === ruSmall) {
+          const langRuBig = elem;
+          langRuBig.innerText = ruBig;
+        } else if (elem.innerText === ruBig) {
+          const langRuSmall = elem;
+          langRuSmall.innerText = ruSmall;
+        }
+      }
+    });
+  }
+}
 
+keyboard.addEventListener('mousedown', pressOnShift);
+document.addEventListener('keydown', pressOnShift);
+
+function pressUpShift(event) {
+  if (event.target.classList.contains('key_shift') || event.code === 'ShiftLeft' || event.code === 'ShiftRight') {
+    keys.forEach((elem) => {
+      const [enSmall, enBig] = elem.en;
+      const [ruSmall, ruBig] = elem.ru;
+      if (elem.innerText === enSmall) {
+        const langEnBig = elem;
+        langEnBig.innerText = enBig;
+      } else if (elem.innerText === enBig) {
+        const langEnSmall = elem;
+        langEnSmall.innerText = enSmall;
+      } else if (elem.innerText === ruBig) {
+        const langRuSmall = elem;
+        langRuSmall.innerText = ruSmall;
+      } else if (elem.innerText === ruSmall) {
+        const langRuBig = elem;
+        langRuBig.innerText = ruBig;
+      }
+    });
+  }
+}
+
+keyboard.addEventListener('mouseup', pressUpShift);
+document.addEventListener('keyup', pressUpShift);
+
+function text(event) {
+  textarea.focus();
+  if (event.target.classList.contains('key')) {
+    if (event.target.classList.contains('key_capslock') || event.target.classList.contains('key_shift') || event.target.classList.contains('key_alt') || event.target.classList.contains('key_meta') || event.target.classList.contains('key_ctrl') || event.target.classList.contains('key_backspace')) {
+      textarea.value += '';
+    } else if (event.target.classList.contains('key_space')) {
+      textarea.value += ' ';
+    } else if (event.target.classList.contains('key_enter')) {
+      textarea.value += '\n';
+    } else if (event.target.classList.contains('key_tab')) {
+      textarea.value += '\t';
+    } else if (event.target.eventCode === 'ArrowLeft' || event.code === 'ArrowLeft') {
+      textarea.value += '◀︎';
+    } else if (event.target.eventCode === 'ArrowRight' || event.code === 'ArrowRight') {
+      textarea.value += '▶︎';
+    } else if (event.target.eventCode === 'ArrowUp' || event.code === 'ArrowUp') {
+      textarea.value += '▲';
+    } else if (event.target.eventCode === 'ArrowDown' || event.code === 'ArrowDown') {
+      textarea.value += '▼';
+    } else {
+      textarea.value += event.target.innerText;
+    }
+  }
+}
+
+keyboard.addEventListener('mousedown', text);
+document.addEventListener('keydown', text);
+
+function deleteChar(event) {
+  if (event.target.eventCode === 'Backspace') {
+    textarea.value = textarea.value.slice(0, -1);
+  }
+}
+keyboard.addEventListener('click', deleteChar);
+
+function getLocalStorage() {
+  if (localStorage.getItem('lang')) {
+    const currentLang = localStorage.getItem('lang');
+    if (currentLang === 'en') {
+      keys.forEach((elem) => {
+        const [enSmall] = elem.en;
+        const enLang = elem;
+        enLang.innerText = enSmall;
+        lang = 'en';
+      });
+    }
+    if (currentLang === 'ru') {
+      keys.forEach((elem) => {
+        const [ruSmall] = elem.ru;
+        const ruLang = elem;
+        ruLang.innerText = ruSmall;
+        lang = 'ru';
+      });
+    }
+  }
+}
+window.addEventListener('load', getLocalStorage);
