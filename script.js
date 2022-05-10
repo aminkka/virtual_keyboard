@@ -480,8 +480,6 @@ function removeHighlightPressedKey(event) {
   });
 }
 
-document.addEventListener('keydown', addHighlightPressedKey);
-document.addEventListener('keyup', removeHighlightPressedKey);
 document.addEventListener('mousedown', addHighlightPressedKey);
 document.addEventListener('mouseup', removeHighlightPressedKey);
 
@@ -553,7 +551,6 @@ function toggleUpperCase(event) {
   }
 }
 keyboard.addEventListener('click', toggleUpperCase);
-document.addEventListener('keydown', toggleUpperCase);
 
 function pressOnShift(event) {
   if (event.target.classList.contains('key_shift') || event.code === 'ShiftLeft' || event.code === 'ShiftRight') {
@@ -583,7 +580,6 @@ function pressOnShift(event) {
 }
 
 keyboard.addEventListener('mousedown', pressOnShift);
-document.addEventListener('keydown', pressOnShift);
 
 function pressUpShift(event) {
   if (event.target.classList.contains('key_shift') || event.code === 'ShiftLeft' || event.code === 'ShiftRight') {
@@ -608,7 +604,6 @@ function pressUpShift(event) {
 }
 
 keyboard.addEventListener('mouseup', pressUpShift);
-document.addEventListener('keyup', pressUpShift);
 
 function text(event) {
   textarea.focus();
@@ -621,29 +616,77 @@ function text(event) {
       textarea.value += '\n';
     } else if (event.target.classList.contains('key_tab')) {
       textarea.value += '\t';
-    } else if (event.target.eventCode === 'ArrowLeft' || event.code === 'ArrowLeft') {
+    } else if (event.target.eventCode === 'ArrowLeft') {
       textarea.value += '◀︎';
-    } else if (event.target.eventCode === 'ArrowRight' || event.code === 'ArrowRight') {
+    } else if (event.target.eventCode === 'ArrowRight') {
       textarea.value += '▶︎';
-    } else if (event.target.eventCode === 'ArrowUp' || event.code === 'ArrowUp') {
+    } else if (event.target.eventCode === 'ArrowUp') {
       textarea.value += '▲';
-    } else if (event.target.eventCode === 'ArrowDown' || event.code === 'ArrowDown') {
+    } else if (event.target.eventCode === 'ArrowDown') {
       textarea.value += '▼';
     } else {
       textarea.value += event.target.innerText;
     }
   }
+  if (event.code) {
+    if (event.code === 'CapsLock' || event.code === 'ShiftLeft' || event.code === 'ShifRight' || event.code === 'AltLeft' || event.code === 'AltRight' || event.code === 'MetaLeft' || event.code === 'MetaRight' || event.code === 'ControlLeft' || event.code === 'Backspace') {
+      textarea.value += '';
+    } else if (event.code === 'Space') {
+      textarea.value += ' ';
+    } else if (event.code === 'Enter') {
+      textarea.value += '\n';
+    } else if (event.code === 'Tab') {
+      textarea.value += '\t';
+    } else if (event.code === 'ArrowLeft') {
+      textarea.value += '◀︎';
+    } else if (event.code === 'ArrowRight') {
+      textarea.value += '▶︎';
+    } else if (event.code === 'ArrowUp') {
+      textarea.value += '▲';
+    } else if (event.code === 'ArrowDown') {
+      textarea.value += '▼';
+    } else {
+      keys.forEach((elem) => {
+        if (event.code === elem.eventCode) {
+          textarea.value += elem.innerText;
+        }
+      });
+    }
+  }
 }
-
 keyboard.addEventListener('mousedown', text);
-document.addEventListener('keydown', text);
 
 function deleteChar(event) {
-  if (event.target.eventCode === 'Backspace') {
+  if (event.target.eventCode === 'Backspace' || event.code === 'Backspace') {
     textarea.value = textarea.value.slice(0, -1);
   }
 }
 keyboard.addEventListener('click', deleteChar);
+
+function textFromKeyboard(event) {
+  event.preventDefault();
+  keys.forEach((elem) => {
+    if (event.code === elem.eventCode) {
+      addHighlightPressedKey(event);
+      toggleUpperCase(event);
+      text(event);
+      deleteChar(event);
+      pressOnShift(event);
+    }
+  });
+}
+document.addEventListener('keydown', textFromKeyboard);
+
+function textFromKeyboardAdd(event) {
+  event.preventDefault();
+  keys.forEach((elem) => {
+    if (event.code === elem.eventCode) {
+      removeHighlightPressedKey(event);
+      pressUpShift(event);
+    }
+  });
+}
+document.addEventListener('keyup', textFromKeyboardAdd);
 
 function getLocalStorage() {
   if (localStorage.getItem('lang')) {
