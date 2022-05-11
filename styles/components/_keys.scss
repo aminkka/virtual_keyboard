@@ -1,0 +1,59 @@
+.key {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 9px;
+  border: 3px solid rgb(204, 159, 174);
+  background: lavenderblush;
+  color:#000000;
+  cursor: pointer;
+  &:hover {
+    box-shadow: 0px 2px 10px 3px rgba(0 ,0, 0, 0.5);
+  }
+}
+
+.key_space {
+  width: 348px;
+}
+
+.key_backspace {
+  width: 105px;
+}
+
+.key_tab {
+  width: 85px;
+}
+
+.key_enter {
+  width: 80px;
+}
+
+.key_capslock {
+  width: 105px;
+}
+
+.key_shift {
+  width: 82px;
+}
+
+.key_ctrl {
+  width: 93px;
+}
+
+.key_meta {
+  width: 90px;
+}
+
+.key_arrow {
+  background:pink;
+  border: 3px solid rgb(204, 159, 174);
+}
+
+.key_active {
+  border-radius: 20px;
+  background:radial-gradient(pink, rgb(217, 110, 128));
+  box-shadow: 0px 2px 10px 3px rgba(0 ,0, 0, 0.5);
+}
