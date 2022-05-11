@@ -629,7 +629,7 @@ function text(event) {
     }
   }
   if (event.code) {
-    if (event.code === 'CapsLock' || event.code === 'ShiftLeft' || event.code === 'ShifRight' || event.code === 'AltLeft' || event.code === 'AltRight' || event.code === 'MetaLeft' || event.code === 'MetaRight' || event.code === 'ControlLeft' || event.code === 'Backspace') {
+    if (event.code === 'CapsLock' || event.code === 'ShiftLeft' || event.code === 'ShiftRight' || event.code === 'AltLeft' || event.code === 'AltRight' || event.code === 'MetaLeft' || event.code === 'MetaRight' || event.code === 'ControlLeft' || event.code === 'Backspace') {
       textarea.value += '';
     } else if (event.code === 'Space') {
       textarea.value += ' ';
